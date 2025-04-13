@@ -5,7 +5,7 @@ const Home = () => {
     return (
         <div>
             <Button
-                variant="destructive"
+                variant={"primary"}
             >
                 Hello
             </Button>
