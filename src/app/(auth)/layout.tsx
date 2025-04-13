@@ -1,12 +1,19 @@
+"use client";
+
 import React from 'react';
 import Image from "next/image";
 import {Button} from "@/components/ui/button";
+import {usePathname} from "next/navigation";
+import Link from "next/link";
 
 interface AuthLayoutProps {
     children: React.ReactNode;
 }
 
 const AuthLayout = ({ children } : AuthLayoutProps) => {
+
+    const pathName = usePathname();
+
     return (
         <main
             className={"bg-neutral-100 min-h-screen "}
@@ -20,9 +27,14 @@ const AuthLayout = ({ children } : AuthLayoutProps) => {
                     <Image src={"/logo.svg"} alt={"logo"} width={152} height={56} />
 
                     <Button
+                        asChild
                         variant="secondary"
                     >
-                        Sign Up
+                        <Link
+                            href={ pathName === "/sign-in" ? "/sign-up" : "/sign-in" }
+                        >
+                            { pathName === "/sign-in" ? "Sign Up" : "Login " }
+                        </Link>
                     </Button>
                 </nav>
                 <div
