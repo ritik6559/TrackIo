@@ -24,7 +24,7 @@ const AuthLayout = ({ children } : AuthLayoutProps) => {
                 <nav
                     className={"flex justify-between items-center"}
                 >
-                    <Image src={"/logo.svg"} alt={"logo"} width={152} height={56} />
+                    <Image src={"/logo.svg"} alt={"logo"} width={132} height={56} />
 
                     <Button
                         asChild
