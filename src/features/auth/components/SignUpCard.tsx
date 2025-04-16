@@ -1,3 +1,5 @@
+"use client"
+
 import React from 'react';
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
 import DottedSeparator from "@/components/dotted-separator";
@@ -25,7 +27,7 @@ const SignUpCard = () => {
         }
     });
 
-    const { mutate } = useRegister();
+    const { mutate, isPending } = useRegister();
 
     const onSubmit = (values: z.infer<typeof registerSchema>) => {
         mutate({
@@ -132,7 +134,7 @@ const SignUpCard = () => {
                     />
 
                     <Button
-                        disabled={false}
+                        disabled={isPending}
                         size={"lg"}
                         className={"w-full"}
                     >
@@ -150,7 +152,7 @@ const SignUpCard = () => {
                 className={"p-7 flex flex-col gap-y-4"}
             >
                 <Button
-                    disabled={false}
+                    disabled={isPending}
                     variant={"secondary"}
                     size={"lg"}
                     className={"w-full"}
@@ -159,7 +161,7 @@ const SignUpCard = () => {
                     Login with Google
                 </Button>
                 <Button
-                    disabled={false}
+                    disabled={isPending}
                     variant={"secondary"}
                     size={"lg"}
                     className={"w-full"}

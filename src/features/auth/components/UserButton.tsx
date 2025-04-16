@@ -2,17 +2,18 @@
 
 import React from 'react';
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { DottedSeparator } from "@/components/dotted-separator"
+import DottedSeparator from "@/components/dotted-separator"
 
-import { useLogout} from "@/features/auth/api/use-logout";
 import { useCurrent } from "@/features/auth/api/use-current";
-import {Loader} from "lucide-react";
+import {Loader, LogOut} from "lucide-react";
+import {useLogout} from "@/features/auth/api/use-logout";
 
-const UserButton = () => {
+const  UserButton = () => {
 
     const { data: user, isLoading } = useCurrent();
+    const { mutate: logout } = useLogout();
 
     if( isLoading ) {
         return (
@@ -52,7 +53,20 @@ const UserButton = () => {
                             {avatarFallback}
                         </AvatarFallback>
                     </Avatar>
+                    <div className={"flex flex-col items-center justify-center"} >
+                        <p className={"text-sm font-medium text-neutral-900"} >{ name || "User" }</p>
+                        <p className={"text-sm text-neutral-500"} >{email}</p>
+                    </div>
                 </div>
+
+                <DottedSeparator className={"mb-1"} />
+                <DropdownMenuItem
+                    onClick={ () => logout()}
+                    className={"h-10 flex items-center justify-center text-amber-700 font-medium cursor-pointer"}
+                >
+                    <LogOut className={"size-4 mr-2"} />
+                    Log out
+                </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>
 

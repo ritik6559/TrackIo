@@ -1,3 +1,5 @@
+"use client";
+
 import React from 'react';
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 import DottedSeparator from "@/components/dotted-separator";
@@ -15,7 +17,7 @@ import {useLogin} from "@/features/auth/api/use-login";
 
 const SignInCard = () => {
 
-    const { mutate } = useLogin(); // useLogin = mutation.mutate() so destructuring mutate()
+    const { mutate, isPending } = useLogin(); // useLogin = mutation.mutate() so destructuring mutate()
 
     const form = useForm<z.infer<typeof loginSchema>>({
         resolver: zodResolver(loginSchema),
@@ -93,9 +95,9 @@ const SignInCard = () => {
 
 
                     <Button
-                        disabled={false}
                         size={"lg"}
                         className={"w-full"}
+                        disabled={isPending}
                     >
                         Log In
                     </Button>
@@ -111,7 +113,7 @@ const SignInCard = () => {
                 className={"p-7 flex flex-col gap-y-4"}
             >
                 <Button
-                    disabled={false}
+                    disabled={isPending}
                     variant={"secondary"}
                     size={"lg"}
                     className={"w-full"}
@@ -120,7 +122,7 @@ const SignInCard = () => {
                     Login with Google
                 </Button>
                 <Button
-                    disabled={false}
+                    disabled={isPending}
                     variant={"secondary"}
                     size={"lg"}
                     className={"w-full"}
