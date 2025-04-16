@@ -1,4 +1,3 @@
-import UserButton from "@/features/auth/components/UserButton";
 import {getCurrent} from "@/features/auth/actions";
 import {redirect} from "next/navigation";
 
@@ -12,7 +11,7 @@ const Home = async () => {
 
     return (
         <div>
-           <UserButton />
+            This is a home page.
         </div>
     );
 };
