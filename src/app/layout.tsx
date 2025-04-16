@@ -5,7 +5,6 @@ import { cn } from "@/lib/utils"
 import React from "react";
 import { QueryProvider } from "@/components/query-provider";
 
-
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
