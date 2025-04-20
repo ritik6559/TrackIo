@@ -5,6 +5,8 @@ import { cn } from "@/lib/utils"
 import React from "react";
 import { QueryProvider } from "@/components/query-provider";
 import {Toaster} from "@/components/ui/sonner";
+import { NuqsAdapter } from 'nuqs/adapters/next/app'
+
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -23,10 +25,13 @@ export default function RootLayout({
       <body
         className={cn(inter.variable, "antialiased min-h-screen")}
       >
-        <QueryProvider>
-            <Toaster closeButton />
-            {children}
-        </QueryProvider>
+      <NuqsAdapter>
+          <QueryProvider>
+              <Toaster closeButton />
+              {children}
+          </QueryProvider>
+      </NuqsAdapter>
+
       </body>
     </html>
   );
