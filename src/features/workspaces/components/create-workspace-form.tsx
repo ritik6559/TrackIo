@@ -15,6 +15,7 @@ import Image from "next/image";
 import {Avatar, AvatarFallback} from "@/components/ui/avatar";
 import {ImageIcon} from "lucide-react";
 import {useRouter} from "next/navigation";
+import {toast} from "sonner";
 
 interface CreateWorkspaceFormProps {
     onCancel?: () => void;
@@ -23,7 +24,8 @@ interface CreateWorkspaceFormProps {
 const CreateWorkspaceForm = ({ onCancel } : CreateWorkspaceFormProps ) => {
 
     const router = useRouter()
-    const { mutate, isPending } = useCreateWorkspace();
+    const { isPending } = useCreateWorkspace();
+    const { mutateAsync } = useCreateWorkspace();
 
     const inputRef = useRef<HTMLInputElement>(null);
 
@@ -34,21 +36,20 @@ const CreateWorkspaceForm = ({ onCancel } : CreateWorkspaceFormProps ) => {
         }
     });
 
-    const onSubmit = (values: z.infer<typeof createWorkspaceSchema>) => {
-
+    const onSubmit = async (values: z.infer<typeof createWorkspaceSchema>) => {
         const finalValues = {
             ...values,
             image: values.image instanceof File ? values.image : "",
-        }
+        };
 
-        mutate({ form: finalValues }, {
-            onSuccess: ({ data }) => {
-                form.reset();
-                onCancel?.();
-                router.push(`/workspaces/${data.$id}`);
-            }
-        });
-    }
+        try {
+            const { data } = await mutateAsync({ form: finalValues });
+            form.reset();
+            router.push(`/workspaces/${data.$id}`);
+        } catch (error) {
+            console.error("Error creating workspace", error);
+        }
+    };
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file =  e.target.files?.[0];

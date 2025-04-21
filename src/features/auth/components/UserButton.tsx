@@ -9,11 +9,14 @@ import DottedSeparator from "@/components/dotted-separator"
 import { useCurrent } from "@/features/auth/api/use-current";
 import {Loader, LogOut} from "lucide-react";
 import {useLogout} from "@/features/auth/api/use-logout";
+import {toast} from "sonner";
+import {useRouter} from "next/navigation";
 
 const  UserButton = () => {
 
     const { data: user, isLoading } = useCurrent();
     const { mutate: logout } = useLogout();
+    const router = useRouter();
 
     if( isLoading ) {
         return (
@@ -28,6 +31,8 @@ const  UserButton = () => {
     if(!user){
         return null;
     }
+
+
 
     const { name, email } = user;
 
@@ -61,7 +66,7 @@ const  UserButton = () => {
 
                 <DottedSeparator className={"mb-1"} />
                 <DropdownMenuItem
-                    onClick={ () => logout()}
+                    onClick={() => logout()}
                     className={"h-10 flex items-center justify-center text-amber-700 font-medium cursor-pointer"}
                 >
                     <LogOut className={"size-4 mr-2"} />
