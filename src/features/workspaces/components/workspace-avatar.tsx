@@ -15,7 +15,7 @@ const WorkspaceAvatar = ({
     className
 } : WorkspaceAvatarProps) => {
 
-    if(image) {
+    if(image && image != "") {
         return (
             <div className={cn(
                 "size-10 relative rounded-md overflow-hidden",

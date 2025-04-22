@@ -1,8 +1,9 @@
 import React from 'react';
+import CreateWorkspaceForm from "@/features/workspaces/components/create-workspace-form";
 import {getCurrent} from "@/features/auth/actions";
 import {redirect} from "next/navigation";
 
-const WorkSpaceId = async () => {
+const Page = async () => {
 
     const user = await getCurrent();
 
@@ -11,10 +12,10 @@ const WorkSpaceId = async () => {
     }
 
     return (
-        <div>
-            Workspace id
+        <div className={"w-full lg:max-w-xl"} >
+            <CreateWorkspaceForm />
         </div>
     );
 };
 
-export default WorkSpaceId;
+export default Page;

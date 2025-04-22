@@ -2,7 +2,7 @@
 
 import React, {useRef, useState} from 'react';
 import {useForm} from "react-hook-form";
-import {createWorkspaceSchema} from "@/features/workspaces/schema";
+import {updateWorkspaceSchema} from "@/features/workspaces/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 import DottedSeparator from "@/components/dotted-separator";
@@ -10,35 +10,39 @@ import { z } from "zod";
 import {Form, FormControl, FormField, FormLabel, FormMessage, FormItem} from "@/components/ui/form";
 import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
-import {useCreateWorkspace} from "@/features/workspaces/api/use-create-workspace";
 import Image from "next/image";
 import {Avatar, AvatarFallback} from "@/components/ui/avatar";
-import {ImageIcon} from "lucide-react";
+import {ArrowLeftIcon, ImageIcon} from "lucide-react";
 import {useRouter} from "next/navigation";
 import {cn} from "@/lib/utils";
+import {Workspace} from "@/features/workspaces/types";
+import {useUpdateWorkspace} from "@/features/workspaces/api/use-update-workspace";
 
-interface CreateWorkspaceFormProps {
+interface EditWorkspaceFormProps {
     onCancel?: () => void;
+    initialValues: Workspace
 }
 
-const CreateWorkspaceForm = ({ onCancel } : CreateWorkspaceFormProps ) => {
+const EditWorkspaceForm = ({ onCancel, initialValues } : EditWorkspaceFormProps ) => {
 
     const router = useRouter()
-    const { isPending } = useCreateWorkspace();
-    const { mutateAsync } = useCreateWorkspace();
+    const { mutateAsync } = useUpdateWorkspace();
 
     const [ isLoading, setLoading ] = useState(false);
 
     const inputRef = useRef<HTMLInputElement>(null);
 
-    const form = useForm<z.infer<typeof createWorkspaceSchema>>({
-        resolver: zodResolver(createWorkspaceSchema),
+    const form = useForm<z.infer<typeof updateWorkspaceSchema>>({
+        resolver: zodResolver(updateWorkspaceSchema),
         defaultValues: {
-            name: "",
+            ...initialValues,
+            image: initialValues.imageUrl ?? ""
         }
     });
 
-    const onSubmit = async (values: z.infer<typeof createWorkspaceSchema>) => {
+    console.log(initialValues)
+
+    const onSubmit = async (values: z.infer<typeof updateWorkspaceSchema>) => {
         setLoading(true);
 
         const finalValues = {
@@ -47,7 +51,7 @@ const CreateWorkspaceForm = ({ onCancel } : CreateWorkspaceFormProps ) => {
         };
 
         try {
-            const { data } = await mutateAsync({ form: finalValues });
+            const { data } = await mutateAsync({ form: finalValues, param :{ workspaceId: initialValues.$id } });
             form.reset();
             router.push(`/workspaces/${data.$id}`);
         } catch (error) {
@@ -69,12 +73,16 @@ const CreateWorkspaceForm = ({ onCancel } : CreateWorkspaceFormProps ) => {
             className={"w-full h-fill border-none shadow-none"}
         >
             <CardHeader
-                className={"flex p-7"}
+                className={"flex flex-row items-center gap-x-4 p-7 space-y-0"}
             >
+                <Button size={"sm"} variant={"secondary"} onClick={onCancel ? onCancel : () => { router.push(`/workspaces/${initialValues.workspaceId}`); }} >
+                    Back
+                    <ArrowLeftIcon className="size-4 mr-2" />
+                </Button>
                 <CardTitle
                     className={"text-xl font-bold"}
                 >
-                    Create a new workspace
+                    {initialValues.name}
                 </CardTitle>
             </CardHeader>
 
@@ -94,7 +102,7 @@ const CreateWorkspaceForm = ({ onCancel } : CreateWorkspaceFormProps ) => {
                         onSubmit={form.handleSubmit(onSubmit)}
                     >
                         <div className={"flex flex-col gap-y-4"} >
-                           <FormField
+                            <FormField
                                 control={form.control}
                                 name={"name"}
                                 render={({ field }) => (
@@ -111,7 +119,7 @@ const CreateWorkspaceForm = ({ onCancel } : CreateWorkspaceFormProps ) => {
                                         <FormMessage />
                                     </FormItem>
                                 )}
-                           />
+                            />
 
                             <FormField
                                 control={form.control}
@@ -126,9 +134,9 @@ const CreateWorkspaceForm = ({ onCancel } : CreateWorkspaceFormProps ) => {
                                                         fill
                                                         className={"object-cover"}
                                                         src={
-                                                        field.value instanceof File
-                                                            ? URL.createObjectURL(field.value)
-                                                            : field.value
+                                                            field.value instanceof File
+                                                                ? URL.createObjectURL(field.value)
+                                                                : field.value
                                                         }
 
                                                     />
@@ -188,7 +196,7 @@ const CreateWorkspaceForm = ({ onCancel } : CreateWorkspaceFormProps ) => {
                                     onClick={onCancel}
                                     disabled={isLoading}
                                 >
-                                    Create Workspace
+                                    Save Changes
                                 </Button>
                             </div>
                         </div>
@@ -200,4 +208,4 @@ const CreateWorkspaceForm = ({ onCancel } : CreateWorkspaceFormProps ) => {
     );
 };
 
-export default CreateWorkspaceForm;
+export default EditWorkspaceForm;

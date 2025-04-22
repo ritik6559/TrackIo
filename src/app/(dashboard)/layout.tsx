@@ -4,6 +4,7 @@ import React from "react";
 import CreateWorkspaceModal from "@/features/workspaces/components/create-workspace-modal";
 import {getCurrent} from "@/features/auth/actions";
 import {redirect} from "next/navigation";
+import {getWorkspaces} from "@/features/workspaces/actions";
 
 interface DashboardLayoutProps {
     children: React.ReactNode;
@@ -12,6 +13,11 @@ interface DashboardLayoutProps {
 const DashboardLayout = async  ({ children } : DashboardLayoutProps) => {
 
     const user = await getCurrent();
+    const workspaces = await getWorkspaces();
+
+    if( workspaces?.total === 0 ){
+        redirect("/workspaces/create");
+    }
 
     if(!user) {
         redirect("/sign-in");
