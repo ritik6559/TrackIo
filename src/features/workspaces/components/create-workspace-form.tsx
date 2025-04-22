@@ -153,16 +153,37 @@ const CreateWorkspaceForm = ({ onCancel } : CreateWorkspaceFormProps ) => {
                                                     onChange={handleImageChange}
                                                     accept={".jpg, .png, .jpeg, .svg"}
                                                 />
-                                                <Button
-                                                    type={"button"}
-                                                    disabled={isLoading}
-                                                    variant="teritary"
-                                                    size={"xs"}
-                                                    className={"w-fit mt-2"}
-                                                    onClick={() => inputRef.current?.click()}
-                                                >
-                                                    Upload Image
-                                                </Button>
+                                                { field.value ? (
+                                                        <Button
+                                                            type={"button"}
+                                                            disabled={isLoading}
+                                                            variant="destructive"
+                                                            size={"xs"}
+                                                            className={"w-fit mt-2"}
+                                                            onClick={() => {
+                                                                field.onChange(null);
+                                                                if( inputRef.current ){
+                                                                    inputRef.current.value = ""
+                                                                }
+                                                            }}
+                                                        >
+                                                        Remove Image
+                                                    </Button>
+                                                ) : (
+                                                    <div>
+                                                        <Button
+                                                            type={"button"}
+                                                            disabled={isLoading}
+                                                            variant="teritary"
+                                                            size={"xs"}
+                                                            className={"w-fit mt-2"}
+                                                            onClick={() => inputRef.current?.click()}
+                                                        >
+                                                            Upload Image
+                                                        </Button>
+                                                    </div>
+                                                )
+                                                }
                                             </div>
                                         </div>
                                     </div>
