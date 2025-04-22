@@ -2,12 +2,21 @@ import Sidebar from "@/components/sidebar";
 import Navbar from "@/components/navbar";
 import React from "react";
 import CreateWorkspaceModal from "@/features/workspaces/components/create-workspace-modal";
+import {getCurrent} from "@/features/auth/actions";
+import {redirect} from "next/navigation";
 
 interface DashboardLayoutProps {
     children: React.ReactNode;
 }
 
-const DashboardLayout = ({ children } : DashboardLayoutProps) => {
+const DashboardLayout = async  ({ children } : DashboardLayoutProps) => {
+
+    const user = await getCurrent();
+
+    if(!user) {
+        redirect("/sign-in");
+    }
+
     return (
         <div
             className={"min-h-screen"}
