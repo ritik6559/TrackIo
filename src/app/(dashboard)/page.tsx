@@ -1,7 +1,7 @@
-import {getCurrent} from "@/features/auth/actions";
+import {getCurrent} from "@/features/auth/queries";
 import {redirect} from "next/navigation";
 import CreateWorkspaceForm from "@/features/workspaces/components/create-workspace-form";
-import {getWorkspaces} from "@/features/workspaces/actions";
+import {getWorkspaces} from "@/features/workspaces/queries";
 
 const Home = async () => {
 
@@ -18,7 +18,7 @@ const Home = async () => {
         redirect(`workspaces/${workspaces?.documents[0].$id}`);
     }
 
-    
+
 
 };
 

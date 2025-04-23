@@ -2,9 +2,9 @@ import Sidebar from "@/components/sidebar";
 import Navbar from "@/components/navbar";
 import React from "react";
 import CreateWorkspaceModal from "@/features/workspaces/components/create-workspace-modal";
-import {getCurrent} from "@/features/auth/actions";
+import {getCurrent} from "@/features/auth/queries";
 import {redirect} from "next/navigation";
-import {getWorkspaces} from "@/features/workspaces/actions";
+import {getWorkspaces} from "@/features/workspaces/queries";
 
 interface DashboardLayoutProps {
     children: React.ReactNode;
