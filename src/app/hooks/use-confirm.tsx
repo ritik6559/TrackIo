@@ -45,7 +45,7 @@ const useConfirm = (
                                 Cancel
                             </Button>
                             <Button onClick={handleConfirm} variant={"destructive"} className={"w-full lg:w-auto"} >
-                                Delete
+                                Confirm
                             </Button>
                         </div>
                     </CardContent>
