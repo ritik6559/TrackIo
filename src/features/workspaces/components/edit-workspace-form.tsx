@@ -36,7 +36,7 @@ const EditWorkspaceForm = ({ onCancel, initialValues } : EditWorkspaceFormProps 
 
     const [ isLoading, setLoading ] = useState(false);
 
-    const fullInviteCode = `${window.location.origin}/workspaces/${initialValues.$id}/json/${initialValues.inviteCode}`
+    const fullInviteCode = `${window.location.origin}/workspaces/${initialValues.$id}/join/${initialValues.inviteCode}`
 
     const [ DeleteDialog, confirmDelete ] = useConfirm(
         "Delete Workspace",
