@@ -230,6 +230,7 @@ const app = new Hono()
             });
 
             if( member ) {
+                console.log("hello")
                 return c.json({
                     error: "Already a member"
                 }, 400);
@@ -242,6 +243,7 @@ const app = new Hono()
             );
 
             if( workspace.inviteCode !== code ) {
+                console.log("hello")
                 return c.json({
                     error: "Invalid invite code"
                 }, 400);

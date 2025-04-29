@@ -3,6 +3,7 @@ import {getCurrent} from "@/features/auth/queries";
 import {redirect} from "next/navigation";
 import {getWorkspaceInfo} from "@/features/workspaces/queries";
 import workspaceAvatar from "@/features/workspaces/components/workspace-avatar";
+import JoinWorkspaceForm from "@/features/workspaces/components/join-workspace-form";
 
 interface JoinPageProps {
     params: {
@@ -20,15 +21,17 @@ const Join = async ({
         redirect("/sign-in")
     }
 
-    const workspace = await getWorkspaceInfo({workspaceId: params.workspaceId});
+    const initialValues = await getWorkspaceInfo({workspaceId: params.workspaceId});
 
-
+    if(!initialValues){
+        redirect("/")
+    }
 
 
     return (
-        <div>
-            {JSON.stringify(workspace, null, 2)}
-        </div>
+        <div className={"w-full lg:max-w-xl"} >
+            <JoinWorkspaceForm initialValues={initialValues!} />
+         </div>
     );
 };
 
