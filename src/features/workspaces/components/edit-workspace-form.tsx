@@ -130,7 +130,7 @@ const EditWorkspaceForm = ({ onCancel, initialValues } : EditWorkspaceFormProps 
             <CardHeader
                 className={"flex flex-row items-center gap-x-4 p-7 space-y-0"}
             >
-                <Button size={"sm"} variant={"secondary"} onClick={onCancel ? onCancel : () => { router.push(`/workspaces/${initialValues.workspaceId}`); }} >
+                <Button size={"sm"} variant={"secondary"} onClick={onCancel ? onCancel : () => { router.push(`/workspaces/${initialValues.$id}`); }} >
                     Back
                     <ArrowLeftIcon className="size-4 mr-2" />
                 </Button>
