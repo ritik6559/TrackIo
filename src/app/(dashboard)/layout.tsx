@@ -5,6 +5,7 @@ import CreateWorkspaceModal from "@/features/workspaces/components/create-worksp
 import {getCurrent} from "@/features/auth/queries";
 import {redirect} from "next/navigation";
 import {getWorkspaces} from "@/features/workspaces/queries";
+import CreateProjectModal from "@/features/projects/components/create-project-modal";
 
 interface DashboardLayoutProps {
     children: React.ReactNode;
@@ -28,6 +29,7 @@ const DashboardLayout = async  ({ children } : DashboardLayoutProps) => {
             className={"min-h-screen"}
         >
             <CreateWorkspaceModal />
+            <CreateProjectModal />
             <div
                 className={"flex w-full h-full"}
             >
