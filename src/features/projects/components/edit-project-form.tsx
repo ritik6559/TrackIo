@@ -19,6 +19,7 @@ import useConfirm from "@/app/hooks/use-confirm";
 import {useUpdateProject} from "@/features/projects/api/use-update-project";
 import {Project} from "@/features/projects/types";
 import {updateProjectSchema} from "@/features/projects/schema";
+import {useDeleteProject} from "@/features/projects/api/use-delete-project";
 
 interface EditProjectFormProps {
     onCancel?: () => void;
@@ -29,7 +30,7 @@ const EditProjectForm = ({ onCancel, initialValues } : EditProjectFormProps ) =>
 
     const router = useRouter()
     const { mutateAsync } = useUpdateProject();
-    // const { mutateAsync: deleteWorkspace, isPending: isDeletingWorkspace } = useDeleteWorkspace();
+    const { mutateAsync: deleteProject, isPending: isDeletingWorkspace } = useDeleteProject();
 
     const [ isLoading, setLoading ] = useState(false);
 
@@ -51,19 +52,28 @@ const EditProjectForm = ({ onCancel, initialValues } : EditProjectFormProps ) =>
     });
 
      const handleDelete = async () => {
-    //     const ok = await confirmDelete();
-    //
-    //     if(!ok){
-    //         return;
-    //     }
-    //
-    //     await deleteWorkspace({
-    //         param: {workspaceId: initialValues.$id}
-    //     }, {
-    //         onSuccess: () => {
-    //             window.location.href = "/"
-    //         }
-    //     });
+        try {
+            const ok = await confirmDelete();
+
+            setLoading(true);
+
+            if (!ok) {
+                return;
+            }
+
+            await deleteProject({
+                param: {projectId: initialValues.$id}
+            }, {
+                onSuccess: () => {
+                    window.location.href = `/workspaces/${initialValues.workspaceId}`
+                }
+            });
+        }
+        catch (error) {
+            console.error(error);
+        } finally {
+            setLoading(false);
+        }
      };
 
     const onSubmit = async (values: z.infer<typeof updateWorkspaceSchema>) => {
@@ -77,6 +87,7 @@ const EditProjectForm = ({ onCancel, initialValues } : EditProjectFormProps ) =>
         try {
             const { data } = await mutateAsync({ form: finalValues, param :{ projectId: initialValues.$id } });
             form.reset();
+            window.location.reload()
         } catch (error) {
             console.error("Error updating project", error);
         } finally {

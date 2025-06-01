@@ -16,6 +16,7 @@ import {cn} from "@/lib/utils";
 import {useCreateProject} from "@/features/projects/api/use-create-project";
 import {createProjectSchema} from "@/features/projects/schema";
 import {useWorkspaceId} from "@/features/workspaces/hooks/use-workspace-id";
+import {useRouter} from "next/navigation";
 
 interface CreateProjectFormProps {
     onCancel?: () => void;
@@ -25,7 +26,7 @@ const CreateProjectForm = ({ onCancel } : CreateProjectFormProps ) => {
 
     const workspaceId = useWorkspaceId();
     const { mutateAsync } = useCreateProject();
-
+    const router = useRouter();
     const [ isLoading, setLoading ] = useState(false);
 
     const inputRef = useRef<HTMLInputElement>(null);
@@ -50,6 +51,7 @@ const CreateProjectForm = ({ onCancel } : CreateProjectFormProps ) => {
             const { data } = await mutateAsync({ form: finalValues });
             console.log(data);
             form.reset();
+            router.push(`/workspaces/${workspaceId}/projects/${data.$id}`);
         } catch (error) {
             console.error("Error creating workspace", error);
         } finally {
