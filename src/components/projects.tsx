@@ -12,7 +12,6 @@ import ProjectAvatar from "@/features/projects/components/project-avatar";
 
 const Projects = () => {
 
-    const projectId = null;
     const workspaceId = useWorkspaceId();
 
     const { data } = useGetProjects({workspaceId});

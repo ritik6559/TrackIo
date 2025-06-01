@@ -83,10 +83,6 @@ const EditWorkspaceForm = ({ onCancel, initialValues } : EditWorkspaceFormProps 
 
         await resetInviteCode({
             param: {workspaceId: initialValues.$id}
-        }, {
-            onSuccess: () => {
-                router.refresh();
-            }
         });
     };
 
@@ -101,7 +97,6 @@ const EditWorkspaceForm = ({ onCancel, initialValues } : EditWorkspaceFormProps 
         try {
             const { data } = await mutateAsync({ form: finalValues, param :{ workspaceId: initialValues.$id } });
             form.reset();
-            router.push(`/workspaces/${data.$id}`);
         } catch (error) {
             console.error("Error creating workspace", error);
         } finally {
