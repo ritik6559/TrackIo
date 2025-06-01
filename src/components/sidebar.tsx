@@ -4,6 +4,7 @@ import Image from "next/image";
 import DottedSeparator from "@/components/dotted-separator";
 import {Navigation} from "@/components/navigation";
 import WorkspaceSwitcher from "@/components/workspace-switcher";
+import Projects from "@/components/projects";
 
 const Sidebar = () => {
     return (
@@ -15,11 +16,11 @@ const Sidebar = () => {
             </Link>
 
             <DottedSeparator className={"my-4"} />
-
             <WorkspaceSwitcher />
-
             <DottedSeparator className={"my-4"} />
             <Navigation />
+            <DottedSeparator className={"my-4"} />
+            <Projects />
         </aside>
     );
 };
