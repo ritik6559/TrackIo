@@ -6,6 +6,7 @@ import {Select, SelectContent, SelectItem, SelectSeparator, SelectTrigger, Selec
 import {FolderIcon, ListChecks, UsersIcon} from "lucide-react";
 import {TaskStatus} from "@/features/tasks/types";
 import {useTaskFilters} from "@/features/tasks/hooks/use-task-filters";
+import {DatePicker} from "@/components/date-picker";
 
 interface DataFiltersProps {
     hideProjectFilters?: boolean;
@@ -141,6 +142,9 @@ const DataFilters = ({ hideProjectFilters }: DataFiltersProps) => {
                     }
                 </SelectContent>
             </Select>
+
+            <DatePicker placeholder={"Due date"} className={"h-8 w-full lg:w-auto"} value={dueDate ? new Date(dueDate) : undefined} onChange={(date) => setFilters({ dueDate: date ? date.toISOString() : null})} />
+
         </div>
     );
 };
