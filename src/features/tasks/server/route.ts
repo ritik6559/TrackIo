@@ -6,7 +6,7 @@ import {getMember} from "@/features/members/utils";
 import {DATABASE_ID, MEMBERS_ID, PROJECTS_ID, TASKS_ID} from "@/config";
 import {Query, ID} from "node-appwrite";
 import {z} from "zod";
-import {TaskStatus} from "@/features/tasks/types";
+import {Task, TaskStatus} from "@/features/tasks/types";
 import {createAdminClient} from "@/lib/appwrite";
 import {Project} from "@/features/projects/types";
 
@@ -76,7 +76,7 @@ export const route = new Hono()
                 query.push(Query.search('name', search))
             }
 
-            const tasks = await databases.listDocuments(
+            const tasks = await databases.listDocuments<Task>(
                 DATABASE_ID,
                 TASKS_ID,
                 query
@@ -103,7 +103,7 @@ export const route = new Hono()
 
                     return {
                         ...member,
-                        mane: user.name,
+                        name: user.name,
                         email: user.email
                     }
                 })
@@ -119,7 +119,7 @@ export const route = new Hono()
                 )
 
                 return {
-                    ...tasks,
+                    ...task,
                     project,
                     assignee
                 }
