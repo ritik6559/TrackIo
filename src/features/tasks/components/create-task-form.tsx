@@ -51,7 +51,8 @@ const CreateTaskForm = ({ onCancel, projectOptions, memberOptions } : CreateTask
             } });
             console.log(data);
             form.reset();
-            onCancel?.();
+            router.refresh()
+            // onCancel?.();
         } catch (error) {
             console.error("Error creating workspace", error);
         } finally {
