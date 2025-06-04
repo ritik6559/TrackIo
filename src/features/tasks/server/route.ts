@@ -1,3 +1,4 @@
+
 import {Hono} from "hono";
 import {sessionMiddleWare} from "@/lib/session-middleware";
 import {zValidator} from "@hono/zod-validator";
@@ -11,6 +12,46 @@ import {createAdminClient} from "@/lib/appwrite";
 import {Project} from "@/features/projects/types";
 
 export const route = new Hono()
+    .delete(
+        '/:taskId',
+        sessionMiddleWare,
+        async (c) => {
+            const user = c.get('user');
+            const databases = c.get('databases')
+
+            const { taskId } = c.req.param();
+
+            const task = await databases.getDocument<Task>(
+                DATABASE_ID,
+                TASKS_ID,
+                taskId
+            );
+
+            const member = await getMember({
+                databases,
+                workspaceId: task.workspaceId,
+                userId: user.$id
+            });
+
+            if(!member){
+                return c.json({
+                    error: "Unauthorized",
+                }, 401)
+            }
+
+            await databases.deleteDocument(
+                DATABASE_ID,
+                TASKS_ID,
+                taskId
+            )
+
+            return c.json({
+                data: {
+                    $id: task.$id
+                }
+            })
+        }
+    )
     .get(
         '/',
         sessionMiddleWare,
@@ -197,45 +238,6 @@ export const route = new Hono()
             });
         }
     )
-    .delete(
-        '/:taskId',
-        sessionMiddleWare,
-        async (c) => {
-            const user = c.get('user');
-            const databases = c.get('databases')
 
-            const { taskId } = c.req.param();
-
-            const task = await databases.getDocument<Task>(
-                DATABASE_ID,
-                TASKS_ID,
-                taskId
-            );
-
-            const member = await getMember({
-                databases,
-                workspaceId: task.workspaceId,
-                userId: user.$id
-            });
-
-            if(!member){
-                return c.json({
-                    error: "Unauthorized",
-                }, 401)
-            }
-
-            await databases.deleteDocument(
-                DATABASE_ID,
-                TASKS_ID,
-                taskId
-            )
-
-            return c.json({
-                data: {
-                    $id: task.$id
-                }
-            })
-        }
-    )
 
 export default route;

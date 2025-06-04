@@ -17,6 +17,7 @@ export const useDeleteTask = () => {
         RequestType
     >({
         mutationFn: async ({ param }) => {
+            console.log(param)
             const response = await client.api.tasks[":taskId"]["$delete"]({ param });
 
             if( !response.ok ) {
@@ -25,14 +26,14 @@ export const useDeleteTask = () => {
 
             return await response.json();
         },
-        onSuccess: ({ data }) => {
+        onSuccess: async ({ data }) => {
             toast.success("Task deleted successfully");
             router.refresh();
-            queryClient.invalidateQueries({ queryKey: ["tasks"] });
-            queryClient.invalidateQueries({ queryKey: ["task", data.$id] })
+            await queryClient.invalidateQueries({ queryKey: ["tasks"] });
+            await queryClient.invalidateQueries({ queryKey: ["task", data.$id] })
         },
-        onError: () => {
-            toast.error("Failed to delete workspace");
+        onError: (e) => {
+            toast.error("Failed to delete task");
         }
     });
 

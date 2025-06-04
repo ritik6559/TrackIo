@@ -9,7 +9,7 @@ import MemberAvatar from "@/features/members/components/member-avatar";
 import {TaskDate} from "@/features/tasks/components/task-date";
 import {Badge} from "@/components/ui/badge";
 import {snakeCaseToTitleCase} from "@/lib/utils";
-import TaskActions from "@/features/tasks/components/task.actions";
+import TaskActions from "@/features/tasks/components/task-actions";
 
 export const columns: ColumnDef<Task>[] = [
     {
@@ -126,7 +126,7 @@ export const columns: ColumnDef<Task>[] = [
     {
         id: "actions",
         cell: ({row}) => {
-            const id = row.original.id;
+            const id = row.original.$id;
             const projectId = row.original.projectId;
 
             return (
