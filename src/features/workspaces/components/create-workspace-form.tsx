@@ -206,7 +206,6 @@ const CreateWorkspaceForm = ({ onCancel } : CreateWorkspaceFormProps ) => {
                                 <Button
                                     type={"submit"}
                                     size={"lg"}
-                                    onClick={onCancel}
                                     disabled={isLoading}
                                 >
                                     Create Workspace

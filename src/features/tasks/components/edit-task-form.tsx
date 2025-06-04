@@ -1,5 +1,3 @@
-"use client"
-
 import React, {useState} from 'react';
 import {useForm} from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -10,34 +8,34 @@ import {Form, FormControl, FormField, FormLabel, FormMessage, FormItem} from "@/
 import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
 import {cn} from "@/lib/utils";
-import {useWorkspaceId} from "@/features/workspaces/hooks/use-workspace-id";
 import {useRouter} from "next/navigation";
 import {createTaskSchema} from "@/features/tasks/schema";
-import {useCreateTask} from "@/features/tasks/api/use-create-task";
 import {DatePicker} from "@/components/date-picker";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
 import MemberAvatar from "@/features/members/components/member-avatar";
-import {TaskStatus} from "@/features/tasks/types";
+import {Task, TaskStatus} from "@/features/tasks/types";
 import ProjectAvatar from "@/features/projects/components/project-avatar";
+import {useUpdateTask} from "@/features/tasks/api/use-update-task";
 
-interface CreateTaskFormProps {
+interface EditTaskFormProps {
     onCancel?: () => void;
     projectOptions: {id: string, name: string, imageUrl: string}[];
     memberOptions: {id: string, name: string}[];
+    initialValues: Task;
 }
 
-const CreateTaskForm = ({ onCancel, projectOptions, memberOptions } : CreateTaskFormProps ) => {
+const EditTaskForm = ({ onCancel, projectOptions, memberOptions, initialValues } : EditTaskFormProps ) => {
 
-    const workspaceId = useWorkspaceId();
-    const { mutateAsync } = useCreateTask();
+    const { mutateAsync } = useUpdateTask();
     const router = useRouter();
 
     const [ isLoading, setLoading ] = useState(false);
 
     const form = useForm<z.infer<typeof createTaskSchema>>({
-        resolver: zodResolver(createTaskSchema.omit({workspaceId: true})),
+        resolver: zodResolver(createTaskSchema.omit({workspaceId: true, description: true})),
         defaultValues: {
-            workspaceId
+            ...initialValues,
+            dueDate: initialValues.dueDate ? new Date(initialValues.dueDate) : undefined
         }
     });
 
@@ -45,13 +43,12 @@ const CreateTaskForm = ({ onCancel, projectOptions, memberOptions } : CreateTask
         setLoading(true);
 
         try {
-            const { data } = await mutateAsync({ json: {
-                ...values,
-                workspaceId
+            const { data } = await mutateAsync({ json: values, param: {
+                taskId: initialValues.$id
             } });
             console.log(data);
             form.reset();
-            router.refresh()
+            onCancel?.()
             // onCancel?.();
         } catch (error) {
             console.error("Error creating workspace", error);
@@ -72,7 +69,7 @@ const CreateTaskForm = ({ onCancel, projectOptions, memberOptions } : CreateTask
                 <CardTitle
                     className={"text-xl font-bold"}
                 >
-                    Create a new Task
+                    Edit Task
                 </CardTitle>
             </CardHeader>
 
@@ -258,16 +255,15 @@ const CreateTaskForm = ({ onCancel, projectOptions, memberOptions } : CreateTask
                                     size={"lg"}
                                     disabled={isLoading}
                                 >
-                                    Create Task
+                                    Save Changes
                                 </Button>
                             </div>
                         </div>
                     </form>
                 </Form>
-
             </CardContent>
         </Card>
     );
 };
 
-export default CreateTaskForm;
+export default EditTaskForm;

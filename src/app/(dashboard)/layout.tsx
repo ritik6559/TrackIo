@@ -7,6 +7,7 @@ import {redirect} from "next/navigation";
 import {getWorkspaces} from "@/features/workspaces/queries";
 import CreateProjectModal from "@/features/projects/components/create-project-modal";
 import CreateTaskModal from "@/features/tasks/components/create-task-modal";
+import EditTaskModal from "@/features/tasks/components/edit-task-modal";
 
 interface DashboardLayoutProps {
     children: React.ReactNode;
@@ -32,6 +33,7 @@ const DashboardLayout = async  ({ children } : DashboardLayoutProps) => {
             <CreateWorkspaceModal />
             <CreateProjectModal />
             <CreateTaskModal />
+            <EditTaskModal />
             <div
                 className={"flex w-full h-full"}
             >
