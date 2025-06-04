@@ -12,6 +12,7 @@ import DataFilters from "@/features/tasks/components/data-filters";
 import {useTaskFilters} from "@/features/tasks/hooks/use-task-filters";
 import {DataTable} from "@/features/tasks/components/data-table";
 import {columns} from "@/features/tasks/components/columns";
+import DataKanban from "@/features/tasks/components/data-kanban";
 
 const TaskViewSwitcher = () => {
 
@@ -111,7 +112,7 @@ const TaskViewSwitcher = () => {
                             className={"mt-8"}
                             value={'kanban'}
                         >
-                            Data Kanban
+                            <DataKanban data={tasks!.documents ?? []} />
                         </TabsContent>
                         <TabsContent
                             className={"mt-8"}
