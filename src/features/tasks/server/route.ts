@@ -349,8 +349,10 @@ export const route = new Hono()
                     assignee
                 }
             })
-
         }
+    )
+    .post(
+        '/bulk-update'
     )
 
 
