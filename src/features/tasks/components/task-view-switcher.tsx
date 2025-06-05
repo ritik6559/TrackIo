@@ -15,6 +15,7 @@ import {columns} from "@/features/tasks/components/columns";
 import DataKanban from "@/features/tasks/components/data-kanban";
 import {useCallback} from "react";
 import {TaskStatus} from "@/features/tasks/types";
+import {useBulkUpdateTask} from "@/features/tasks/api/use-bulk-updates-tasks";
 
 const TaskViewSwitcher = () => {
 
@@ -42,17 +43,21 @@ const TaskViewSwitcher = () => {
         dueDate
     });
 
+    const {mutateAsync: bulkUpdate} = useBulkUpdateTask();
+
     const { open  } = useCreateTaskModal();
 
-    const onKanbanChange = useCallback((
+    const onKanbanChange = useCallback(async (
         tasks: {
             $id: string,
             status: TaskStatus,
             position: number
         }[]
     ) => {
-        
-    })
+        await bulkUpdate({
+            json: {tasks}
+        })
+    }, [bulkUpdate])
 
     return (
         <Tabs
