@@ -8,7 +8,6 @@ import {MemberRole} from "@/features/members/types";
 import {generateInviteCode} from "@/lib/utils";
 import {getMember} from "@/features/members/utils";
 import { z } from "zod";
-import {getWorkspace} from "@/features/workspaces/queries";
 import {Workspace} from "@/features/workspaces/types";
 
 const app = new Hono()
@@ -261,6 +260,60 @@ const app = new Hono()
             )
 
             return c.json({ data: workspace });
+        }
+    )
+    .get(
+        '/:workspaceId',
+        sessionMiddleWare,
+        async (c) => {
+            const user = c.get("user");
+            const databases = c.get("databases");
+            const { workspaceId } = c.req.param();
+
+            const member = await getMember({
+                databases,
+                workspaceId,
+                userId: user.$id
+            });
+
+            if( !member ){
+                return c.json({
+                    error: 'Unauthorized'
+                }, 401)
+            }
+
+            const workspace = await databases.getDocument<Workspace>(
+                DATABASE_ID,
+                WORKSPACES_ID,
+                workspaceId
+            );
+
+            return c.json({
+                data: workspace
+            })
+        }
+    )
+    .get(
+        '/:workspaceId/info',
+        sessionMiddleWare,
+        async (c) => {
+            const databases = c.get("databases");
+            const { workspaceId } = c.req.param();
+
+
+            const workspace = await databases.getDocument<Workspace>(
+                DATABASE_ID,
+                WORKSPACES_ID,
+                workspaceId
+            );
+
+            return c.json({
+                data: {
+                    $id: workspace.$id,
+                    name: workspace.name,
+                    imageUrl: workspace.imageUrl
+                }
+            })
         }
     )
 

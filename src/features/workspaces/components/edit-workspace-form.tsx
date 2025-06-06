@@ -96,7 +96,6 @@ const EditWorkspaceForm = ({ onCancel, initialValues } : EditWorkspaceFormProps 
 
         try {
             const { data } = await mutateAsync({ form: finalValues, param :{ workspaceId: initialValues.$id } });
-            form.reset();
         } catch (error) {
             console.error("Error creating workspace", error);
         } finally {

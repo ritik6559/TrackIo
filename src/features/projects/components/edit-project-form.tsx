@@ -86,8 +86,6 @@ const EditProjectForm = ({ onCancel, initialValues } : EditProjectFormProps ) =>
 
         try {
             const { data } = await mutateAsync({ form: finalValues, param :{ projectId: initialValues.$id } });
-            form.reset();
-            window.location.reload()
         } catch (error) {
             console.error("Error updating project", error);
         } finally {
