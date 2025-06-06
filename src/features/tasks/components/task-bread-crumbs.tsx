@@ -6,6 +6,9 @@ import Link from "next/link";
 import {useWorkspaceId} from "@/features/workspaces/hooks/use-workspace-id";
 import {ChevronRightIcon, TrashIcon} from "lucide-react";
 import {Button} from "@/components/ui/button";
+import {useDeleteTask} from "@/features/tasks/api/use-delete-task";
+import useConfirm from "@/app/hooks/use-confirm";
+import {useRouter} from "next/navigation";
 
 interface TaskBreadCrumbsProps {
     project: Project;
@@ -19,8 +22,34 @@ const TaskBreadCrumbs = ({
 
     const workspaceId = useWorkspaceId();
 
+    const router = useRouter();
+
+    const { mutateAsync, isPending } = useDeleteTask();
+    const [ ConfirmDialog, confirm ] = useConfirm(
+        'Delete task',
+        'This action cannot be undone',
+    );
+
+    const handleDeleteTask = async () => {
+        const ok = await confirm();
+
+        if(!ok){
+            return;
+        }
+
+        await mutateAsync({
+            param: {
+                taskId: task.$id
+            }
+        });
+
+        router.push(`/workspaces/${workspaceId}/tasks`);
+
+    }
+
     return (
         <div className={"flex items-center gap-x-2"} >
+            <ConfirmDialog />
             <ProjectAvatar
                 name={project.name}
                 image={project.imageUrl}
@@ -38,6 +67,8 @@ const TaskBreadCrumbs = ({
                 className={"ml-auto"}
                 variant={"destructive"}
                 size={"sm"}
+                onClick={handleDeleteTask}
+                disabled={isPending}
             >
                 <TrashIcon className={"size-4 lg:mr-2"} />
                 <span className={"hidden lg:block"} >Delete Task</span>
