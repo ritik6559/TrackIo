@@ -1,6 +1,7 @@
 import React from 'react';
 import {getCurrent} from "@/features/auth/queries";
 import {redirect} from "next/navigation";
+import WorkspaceIdClient from "@/app/(dashboard)/workspaces/[workspaceId]/client";
 
 const WorkSpaceId = async () => {
 
@@ -11,9 +12,7 @@ const WorkSpaceId = async () => {
     }
 
     return (
-        <div>
-            Workspace id
-        </div>
+        <WorkspaceIdClient />
     );
 };
 
