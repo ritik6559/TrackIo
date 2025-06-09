@@ -10,7 +10,6 @@ import {
     PlusIcon
 } from "lucide-react";
 import {Button} from "@/components/ui/button";
-import createTaskModal from "@/features/tasks/components/create-task-modal";
 import {useCreateTaskModal} from "@/features/tasks/hooks/use-create-task-modal";
 
 interface KanbanColumnHeaderProps {

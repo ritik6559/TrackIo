@@ -3,7 +3,6 @@ import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
-import {TaskDate} from "@/features/tasks/components/task-date";
 import {TaskStatus} from "@/features/tasks/types";
 
 const badgeVariants = cva(

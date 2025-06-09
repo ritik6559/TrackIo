@@ -1,8 +1,5 @@
 "use server"
 
-import {Account, Client} from "node-appwrite";
-import {cookies} from "next/headers";
-import {AUTH_COOKIE} from "@/features/auth/constants";
 import {createSessionClient} from "@/lib/appwrite";
 
 export const getCurrent = async () => {
@@ -11,7 +8,8 @@ export const getCurrent = async () => {
         const { account } = await createSessionClient();
 
         return await account.get();
-    } catch (error) {
+    } catch (e) {
+        console.log(e);
         return null;
     }
 }

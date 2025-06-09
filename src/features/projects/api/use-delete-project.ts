@@ -2,7 +2,6 @@ import { InferResponseType, InferRequestType } from "hono";
 import {client} from "@/lib/rpc";
 import { toast } from "sonner";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
-import {useRouter} from "next/navigation";
 
 type ResponseType = InferResponseType<typeof client.api.projects[":projectId"]["$delete"], 200>;
 type RequestType = InferRequestType<typeof client.api.projects[":projectId"]["$delete"]>

@@ -8,7 +8,6 @@ import {Form, FormControl, FormField, FormLabel, FormMessage, FormItem} from "@/
 import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
 import {cn} from "@/lib/utils";
-import {useRouter} from "next/navigation";
 import {createTaskSchema} from "@/features/tasks/schema";
 import {DatePicker} from "@/components/date-picker";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
@@ -27,7 +26,6 @@ interface EditTaskFormProps {
 const EditTaskForm = ({ onCancel, projectOptions, memberOptions, initialValues } : EditTaskFormProps ) => {
 
     const { mutateAsync } = useUpdateTask();
-    const router = useRouter();
 
     const [ isLoading, setLoading ] = useState(false);
 

@@ -30,7 +30,7 @@ const EditProjectForm = ({ onCancel, initialValues } : EditProjectFormProps ) =>
 
     const router = useRouter()
     const { mutateAsync } = useUpdateProject();
-    const { mutateAsync: deleteProject, isPending: isDeletingWorkspace } = useDeleteProject();
+    const { mutateAsync: deleteProject } = useDeleteProject();
 
     const [ isLoading, setLoading ] = useState(false);
 
@@ -85,7 +85,7 @@ const EditProjectForm = ({ onCancel, initialValues } : EditProjectFormProps ) =>
         };
 
         try {
-            const { data } = await mutateAsync({ form: finalValues, param :{ projectId: initialValues.$id } });
+            await mutateAsync({ form: finalValues, param :{ projectId: initialValues.$id } });
         } catch (error) {
             console.error("Error updating project", error);
         } finally {

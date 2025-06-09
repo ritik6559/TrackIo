@@ -28,12 +28,10 @@ const MembersList = () => {
 
     const {
         mutateAsync: deleteMember,
-        isPending: isDeletingMember
     } = useDeleteMember();
 
     const {
         mutateAsync: updateMember,
-        isPending: isUpdatingMember
     } = useUpdateMember();
 
     const handleUpdateMember = async ( memberId: string, role: MemberRole ) => {
@@ -55,8 +53,6 @@ const MembersList = () => {
             }
         });
     }
-
-
 
     return (
         <Card

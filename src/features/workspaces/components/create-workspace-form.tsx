@@ -24,7 +24,6 @@ interface CreateWorkspaceFormProps {
 const CreateWorkspaceForm = ({ onCancel } : CreateWorkspaceFormProps ) => {
 
     const router = useRouter()
-    const { isPending } = useCreateWorkspace();
     const { mutateAsync } = useCreateWorkspace();
 
     const [ isLoading, setLoading ] = useState(false);

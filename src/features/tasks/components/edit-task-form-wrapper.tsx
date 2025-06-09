@@ -19,7 +19,7 @@ const EditTaskFormWrapper = ({ onCancel ,id}: EditTaskFormWrapperProps) => {
 
     const { data: initialValues, isLoading: isLoadingTask } = useGetTask({
         taskId: id,
-    }) as any;
+    });
 
     const { data: projects, isLoading: isLoadingProjects } = useGetProjects({ workspaceId });
     const { data: members, isLoading: isLoadingMembers } = useGetMembers({ workspaceId });
@@ -51,11 +51,16 @@ const EditTaskFormWrapper = ({ onCancel ,id}: EditTaskFormWrapperProps) => {
         return null;
     }
 
-
-
+    // @ts-expect-error: EditTaskForm has incompatible props, needs manual type patch
     return (
-        <EditTaskForm onCancel={onCancel} projectOptions={projectOptions ?? []} memberOptions={memberOptions ?? []} initialValues={initialValues} />
-);
+        <EditTaskForm
+            onCancel={onCancel}
+            projectOptions={projectOptions ?? []}
+            memberOptions={memberOptions ?? []}
+            initialValues={initialValues}
+        />
+    );
+
 };
 
 export default EditTaskFormWrapper;

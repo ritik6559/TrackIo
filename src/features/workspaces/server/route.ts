@@ -2,14 +2,13 @@ import { Hono } from "hono";
 import {zValidator} from "@hono/zod-validator";
 import {createWorkspaceSchema, updateWorkspaceSchema} from "@/features/workspaces/schema";
 import {sessionMiddleWare} from "@/lib/session-middleware";
-import {DATABASE_ID, IMAGES_BUCKET_ID, WORKSPACES_ID, MEMBERS_ID, PROJECTS_ID, TASKS_ID} from "@/config";
+import {DATABASE_ID, IMAGES_BUCKET_ID, WORKSPACES_ID, MEMBERS_ID, TASKS_ID} from "@/config";
 import {ID, Query} from "node-appwrite";
 import {MemberRole} from "@/features/members/types";
 import {generateInviteCode} from "@/lib/utils";
 import {getMember} from "@/features/members/utils";
 import { z } from "zod";
 import {Workspace} from "@/features/workspaces/types";
-import {Project} from "@/features/projects/types";
 import {endOfMonth, startOfMonth, subMonths} from "date-fns";
 import {TaskStatus} from "@/features/tasks/types";
 

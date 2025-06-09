@@ -8,6 +8,7 @@ import TaskBreadCrumbs from "@/features/tasks/components/task-bread-crumbs";
 import DottedSeparator from "@/components/dotted-separator";
 import TaskOverview from "@/features/tasks/components/task-overview";
 import TaskDescription from "@/features/tasks/components/task-description";
+import {Task} from "@/features/tasks/types";
 
 export const TaskIdClient = () => {
 
@@ -26,13 +27,15 @@ export const TaskIdClient = () => {
         return <PageError message={"Task not found"} />
     }
 
+
     return (
         <div className={"flex flex-col"} >
-            <TaskBreadCrumbs project={data.project} task={data} />
+
+            <TaskBreadCrumbs project={data.project} task={data as unknown as Task} />
             <DottedSeparator className={"my-6"} />
             <div className={"grid grid-cols-1 lg:grid-cols-2 gap-4"} >
-                <TaskOverview task={data} />
-                <TaskDescription task={data} />
+                <TaskOverview task={data as unknown as Task} />
+                <TaskDescription task={data as unknown as Task} />
             </div>
         </div>
     )

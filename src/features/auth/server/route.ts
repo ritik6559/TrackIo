@@ -7,8 +7,6 @@ import {deleteCookie, setCookie} from "hono/cookie";
 import {AUTH_COOKIE} from "@/features/auth/constants";
 import {sessionMiddleWare} from "@/lib/session-middleware";
 
-
-
 const app = new Hono()
     .get(
         "/current",
@@ -49,7 +47,7 @@ const app = new Hono()
 
             const { account } = await createAdminClient();
 
-            const user = await account.create(
+            await account.create(
                 ID.unique(),
                 email,
                 password,

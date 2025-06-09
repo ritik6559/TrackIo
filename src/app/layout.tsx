@@ -31,7 +31,6 @@ export default function RootLayout({
               {children}
           </QueryProvider>
       </NuqsAdapter>
-
       </body>
     </html>
   );
