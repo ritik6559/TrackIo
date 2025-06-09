@@ -1,15 +1,19 @@
 "use server"
 
-import {createSessionClient} from "@/lib/appwrite";
+import { createSessionClient } from "@/lib/appwrite";
 
-export const getCurrent = async () => {
-
+export async function getCurrent() {
     try {
-        const { account } = await createSessionClient();
+        const sessionClient = await createSessionClient();
 
+        if (!sessionClient) {
+            return null;
+        }
+
+        const { account } = sessionClient;
         return await account.get();
     } catch (e) {
-        console.log(e);
+        console.error("Error getting current user:", e);
         return null;
     }
 }

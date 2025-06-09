@@ -18,7 +18,7 @@ const ErrorPage = () => (
             variant={"secondary"}
             asChild
         >
-            <Link href={'/public'}>
+            <Link href={'/sign-in'}>
                 Back to home
             </Link>
         </Button>

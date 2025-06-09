@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react';
-import UserButton from "@/features/auth/components/UserButton";
+import UserButton from "@/features/auth/components/user-button";
 import MobileSidebar from "@/components/mobile-sidebar";
 import {usePathname} from "next/navigation";
 

@@ -16,14 +16,15 @@ interface DashboardLayoutProps {
 const DashboardLayout = async  ({ children } : DashboardLayoutProps) => {
 
     const user = await getCurrent();
+
+    if(!user) {
+        redirect("/sign-in");
+    }
+
     const workspaces = await getWorkspaces();
 
     if( workspaces?.total === 0 ){
         redirect("/workspaces/create");
-    }
-
-    if(!user) {
-        redirect("/sign-in");
     }
 
     return (

@@ -14,6 +14,7 @@ import {Form, FormControl, FormField, FormItem, FormMessage} from "@/components/
 import Link from "next/link";
 import {loginSchema} from "@/features/auth/schemas";
 import {useLogin} from "@/features/auth/api/use-login";
+import {signUpWithGithub, signUpWithGoogle} from "@/lib/oauth";
 
 const SignInCard = () => {
 
@@ -117,6 +118,7 @@ const SignInCard = () => {
                     variant={"secondary"}
                     size={"lg"}
                     className={"w-full"}
+                    onClick={() => signUpWithGoogle()}
                 >
                     <FcGoogle className={"mr-2 size-5"} />
                     Login with Google
@@ -126,6 +128,7 @@ const SignInCard = () => {
                     variant={"secondary"}
                     size={"lg"}
                     className={"w-full"}
+                    onClick={() => signUpWithGithub()}
                 >
                     <FaGithub className={"mr-2 size-5"} />
                     Login with Github
