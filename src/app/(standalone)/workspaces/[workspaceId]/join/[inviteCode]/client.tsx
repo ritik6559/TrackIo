@@ -1,3 +1,5 @@
+"use client"
+
 import React from 'react';
 import JoinWorkspaceForm from "@/features/workspaces/components/join-workspace-form";
 import {useWorkspaceId} from "@/features/workspaces/hooks/use-workspace-id";
@@ -18,6 +20,7 @@ const WorkspaceJoinClient = () => {
     }
 
     if(!initialValues) {
+        console.log("initialValues", initialValues);
         return <PageError message={"Workspace does not exist,"} />
     }
 
