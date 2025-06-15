@@ -1,36 +1,84 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TrackIo
 
-## Getting Started
+A collaborative project management platform built with cutting-edge web technologies. TrackIo empowers teams to organize workspaces, manage projects, and track tasks with an intuitive and responsive interface.
 
-First, run the development server:
+## ✨ Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Workspace Management** - Create and customize workspaces for different teams or organizations
+- **Team Collaboration** - Invite users to workspaces with role-based permissions
+- **Project Organization** - Create and manage multiple projects within workspaces
+- **Task Management** - Assign, track, and monitor tasks across projects
+- **Real-time Updates** - Stay synchronized with your team's progress
+- **Responsive Design** - Works seamlessly across desktop and mobile devices
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Tech Stack
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **[Next.js 15](https://nextjs.org/)** - React framework with App Router
+- **[Appwrite](https://appwrite.io/)** - Backend-as-a-Service for authentication and database
+- **[tRPC](https://trpc.io/)** - End-to-end typesafe APIs
+- **[Hono](https://hono.dev/)** - Fast web framework for API routes
+- **[Tailwind CSS](https://tailwindcss.com/)** - Utility-first CSS framework
+- **[shadcn/ui](https://ui.shadcn.com/)** - Beautiful and accessible UI components
+- **TypeScript** - Type-safe development experience
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📋 Prerequisites
 
-## Learn More
+Before running this project, make sure you have:
 
-To learn more about Next.js, take a look at the following resources:
+- Node.js 18.0 or higher
+- npm, yarn, or pnpm package manager
+- An Appwrite instance (cloud or self-hosted)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🛠️ Installation
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. **Clone the repository**
+   ```bash
+   https://github.com/ritik6559/TrackIo.git
+   cd TrackIo
+   ```
 
-## Deploy on Vercel
+2. **Install dependencies**
+   ```bash
+   npm install
+   # or
+   yarn install
+   # or
+   pnpm install
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+3. **Set up environment variables**
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+   Create a `.env.local` file in the root directory:
+   ```env
+    NEXT_PUBLIC_APP_URL=http://localhost:3000
+
+    NEXT_PUBLIC_APPWRITE_ENDPOINT=
+    NEXT_PUBLIC_APPWRITE_PROJECT=
+
+    NEXT_PUBLIC_APPWRITE_DATABASE_ID=
+    NEXT_PUBLIC_APPWRITE_WORKSPACES_ID=
+    NEXT_PUBLIC_APPWRITE_MEMBERS_ID=
+    NEXT_PUBLIC_APPWRITE_PROJECTS_ID=
+    NEXT_PUBLIC_APPWRITE_TASKS_ID=
+
+    NEXT_PUBLIC_APPWRITE_IMAGES_BUCKET_ID=
+
+    NEXT_APPWRITE_KEY=
+   ```
+
+4. **Set up Appwrite**
+
+   Create collections in your Appwrite database:
+    - `workspaces` - Store workspace information
+    - `projects` - Store project data
+    - `tasks` - Store task details
+    - `members` - Store workspace member relationships
+
+5. **Run the development server**
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   # or
+   pnpm dev
+   ```
